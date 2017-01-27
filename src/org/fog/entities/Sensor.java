@@ -1,6 +1,7 @@
 package org.fog.entities;
 
 import java.util.ArrayList;
+import java.io.*;
 
 import org.cloudbus.cloudsim.UtilizationModelFull;
 import org.cloudbus.cloudsim.core.CloudSim;
@@ -84,7 +85,12 @@ public class Sensor extends SimEntity{
 			if(edge.getSource().equals(getTupleType()))
 				_edge = edge;
 		}
-		long cpuLength = (long) _edge.getTupleCpuLength();
+		
+		string num = DCNSFog.input.readLine();
+		System.out.println(num);
+		
+		long cpuLength = Long.parseLong(num);
+		Log.printLine(cpuLength);
 		long nwLength = (long) _edge.getTupleNwLength();
 		
 		Tuple tuple = new Tuple(getAppId(), FogUtils.generateTupleId(), Tuple.UP, cpuLength, 1, nwLength, outputSize, 
