@@ -1,7 +1,11 @@
 package org.fog.entities;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.io.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 
 import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.UtilizationModelFull;
@@ -33,6 +37,7 @@ public class Sensor extends SimEntity{
 	private int controllerId;
 	private Application app;
 	private double latency;
+	private static Double last;
 	
 	public Sensor(String name, int userId, String appId, int gatewayDeviceId, double latency, GeoLocation geoLocation, 
 			Distribution transmitDistribution, int cpuLength, int nwLength, String tupleType, String destModuleName) {
@@ -96,6 +101,16 @@ public class Sensor extends SimEntity{
 			e.printStackTrace();
 		}
 		
+		if (num.equals("")) {
+			DecimalFormat df = new DecimalFormat("#.000");
+		    DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance();
+		    sym.setDecimalSeparator('.');
+		    df.setDecimalFormatSymbols(sym);
+
+			num = df.format(last);
+		}
+		
+		last = Double.parseDouble(num);
 		long cpuLength = (long) Double.parseDouble(num);
 		long nwLength = (long) _edge.getTupleNwLength();
 		
