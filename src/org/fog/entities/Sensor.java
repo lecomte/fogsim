@@ -3,6 +3,7 @@ package org.fog.entities;
 import java.util.ArrayList;
 import java.io.*;
 
+import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.UtilizationModelFull;
 import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.core.SimEntity;
@@ -10,6 +11,7 @@ import org.cloudbus.cloudsim.core.SimEvent;
 import org.fog.application.AppEdge;
 import org.fog.application.AppLoop;
 import org.fog.application.Application;
+import org.fog.test.perfeval.DCNSFog;
 import org.fog.utils.FogEvents;
 import org.fog.utils.FogUtils;
 import org.fog.utils.GeoLocation;
@@ -86,11 +88,15 @@ public class Sensor extends SimEntity{
 				_edge = edge;
 		}
 		
-		string num = DCNSFog.input.readLine();
-		System.out.println(num);
+		String num = null;
+		try {
+			num = DCNSFog.input.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		long cpuLength = Long.parseLong(num);
-		Log.printLine(cpuLength);
+		long cpuLength = (long) Double.parseDouble(num);
 		long nwLength = (long) _edge.getTupleNwLength();
 		
 		Tuple tuple = new Tuple(getAppId(), FogUtils.generateTupleId(), Tuple.UP, cpuLength, 1, nwLength, outputSize, 
