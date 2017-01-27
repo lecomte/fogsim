@@ -46,12 +46,21 @@ public class DCNSFog {
 	static List<Actuator> actuators = new ArrayList<Actuator>();
 	static int numOfAreas = 1;
 	static int numOfCamerasPerArea = 4;
+	public static BufferedReader input;
 	
 	private static boolean CLOUD = false;
 	
 	public static void main(String[] args) {
 
 		Log.printLine("Starting DCNS...");
+		
+		try {
+		    File file = new File("entries/data");
+		    input = new BufferedReader(new FileReader(file));
+
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
 
 		try {
 			Log.disable();
