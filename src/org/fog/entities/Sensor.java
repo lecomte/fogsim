@@ -1,13 +1,9 @@
 package org.fog.entities;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-
-import org.cloudbus.cloudsim.Log;
 import org.cloudbus.cloudsim.UtilizationModelFull;
 import org.cloudbus.cloudsim.core.CloudSim;
 import org.cloudbus.cloudsim.core.SimEntity;
