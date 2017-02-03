@@ -34,6 +34,8 @@ public class Sensor extends SimEntity{
 	private Application app;
 	private double latency;
 	private static Double last;
+	private static int metodoPreenchimento = 1; //1 = Último valor; 2 = Média
+	private static double maior = 0, menor = 999999;
 	
 	public Sensor(String name, int userId, String appId, int gatewayDeviceId, double latency, GeoLocation geoLocation, 
 			Distribution transmitDistribution, int cpuLength, int nwLength, String tupleType, String destModuleName) {
@@ -102,12 +104,24 @@ public class Sensor extends SimEntity{
 		    DecimalFormatSymbols sym = DecimalFormatSymbols.getInstance();
 		    sym.setDecimalSeparator('.');
 		    df.setDecimalFormatSymbols(sym);
-
-			num = df.format(last);
+		    if (metodoPreenchimento == 1) 
+		    	num = df.format(last);
+		    else if (metodoPreenchimento == 2) {
+		    	num = df.format((maior + menor) / 2);
+		    }
 		}
-		
-		last = Double.parseDouble(num);
-		long cpuLength = (long) Double.parseDouble(num);
+		double valor = Double.parseDouble(num);
+		if (metodoPreenchimento == 1) 
+			last = valor;
+	    else if (metodoPreenchimento == 2) {
+	    	if (valor > maior) {
+	    		maior = valor;
+	    	}
+	    	if (valor < menor) {
+	    		menor = valor;
+	    	}
+	    }
+		long cpuLength = (long) valor;
 		long nwLength = (long) _edge.getTupleNwLength();
 		
 		Tuple tuple = new Tuple(getAppId(), FogUtils.generateTupleId(), Tuple.UP, cpuLength, 1, nwLength, outputSize, 
