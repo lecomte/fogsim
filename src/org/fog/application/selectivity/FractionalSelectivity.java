@@ -13,7 +13,19 @@ public class FractionalSelectivity implements SelectivityModel{
 	 * The fixed probability of output tuple creation per incoming input tuple
 	 */
 	double selectivity;
-	public static UniformDistr rand = new UniformDistr(0,1, (long) 0.428956419);
+	private static double v_seed[] = {
+            0.428956419,
+            0.1954324947,
+            0.1145661099,
+            0.1835732737,
+            0.794161987,
+            0.1329531353,
+            0.200496737,
+            0.633816299,
+            0.1410143363,
+            0.1282538739
+    };
+	public static UniformDistr rand = new UniformDistr(0,1, (long) v_seed[0]);
 	
 	public FractionalSelectivity(double selectivity){
 		setSelectivity(selectivity);
