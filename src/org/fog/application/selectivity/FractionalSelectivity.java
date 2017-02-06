@@ -1,5 +1,7 @@
 package org.fog.application.selectivity;
 
+import org.cloudbus.cloudsim.distributions.UniformDistr;
+
 /**
  * Generates an output tuple for an incoming input tuple with a fixed probability
  * @author Harshit Gupta
@@ -11,6 +13,7 @@ public class FractionalSelectivity implements SelectivityModel{
 	 * The fixed probability of output tuple creation per incoming input tuple
 	 */
 	double selectivity;
+	public static UniformDistr rand = new UniformDistr(0,1, (long) 0.428956419);
 	
 	public FractionalSelectivity(double selectivity){
 		setSelectivity(selectivity);
@@ -24,8 +27,12 @@ public class FractionalSelectivity implements SelectivityModel{
 	
 	@Override
 	public boolean canSelect() {
-		if(Math.random() < getSelectivity()) // if the probability condition is satisfied
+		//double a = Math.random();
+		double a = rand.sample();
+		System.out.println("teste " + a);
+		if(a < getSelectivity()) { // if the probability condition is satisfied
 			return true;
+		}
 		return false;
 	}
 	
